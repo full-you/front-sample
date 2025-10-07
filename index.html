@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=“UTF-8”>
+    <!--↓styleタグでCSS設定-->
+    <style>
+        .title {
+            color: red;
+        }
+    </style>
+    <!--↓cssファイルの読み込み-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--↓javaScriptファイルの読み込み。jsファイルはheadタグ内かbodyタグ内に定義する-->
+    <script src="js/common.js"></script>
+    <title>サンプルページ</title>
+</head>
+
+<body>
+    <h1 class="title">こんにちは！</h1>
+    <!--↓style属性でタグに直接CSSを適用-->
+    <p style="color: blue;">文章１</p>
+    <p class="fontColorGreen">文章２</p>
+    <div>
+        <p id="unique">文章３</p>
+        <p class="fontColorGreen fontSize50">文章４</p>
+    </div>
+    <button>ボタン</button>
+    <input type="text">
+</body>
+
+</html>

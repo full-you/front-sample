@@ -1,0 +1,100 @@
+body {
+    color: darkslategray;
+    font-family: "Kaushan Script", cursive;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+#header_flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.5rem;
+}
+
+nav ul li {
+    list-style: none;
+    margin-left: 50px;
+}
+
+nav ul:last-child {
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: darkslategray;
+    font-weight: bold;
+}
+
+#firstView {
+    position: relative;
+    height: 700px;
+    width: 100%;
+    background: url(../img/first-view.jpg) no-repeat;
+    background-size: cover;
+}
+
+#description {
+    font-family: "Mochiy Pop P One", sans-serif;
+    position: absolute;
+    top: 70%;
+    margin-left: 20px;
+    color: lightgray;
+}
+
+#description h1 {
+    margin-bottom: -20px;
+}
+
+#description a {
+    font-size: 1rem;
+}
+
+.contentsSection {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.contentsTitle h2 {
+    line-height: 0.7;
+    background-color: #e0e9f5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.contentsTitle span {
+    font-size: 1rem;
+    font-family: "Mochiy Pop P One", sans-serif;
+    font-weight: normal;
+}
+
+.contents {
+    line-height: 1;
+    font-family: sans-serif;
+}
+
+.contentsEnd {
+    margin-bottom: 100px;
+}
+
+footer {
+    font-family: sans-serif;
+}

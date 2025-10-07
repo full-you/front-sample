@@ -1,0 +1,24 @@
+/* class：fontColorGreenの文字色をgreenに設定 */
+.fontColorGreen {
+    color: green;
+}
+
+/* divタグの背景色をaquaに設定*/
+div {
+    background-color: aqua;
+}
+
+/* id：uniqueの文字に下線を追加 */
+#unique {
+    text-decoration: underline;
+}
+
+/* class：fontSizeLargeのフォントサイズをlargeに設定 */
+.fontSize50 {
+    font-size: 50px;
+}
+
+/* divタグ内の要素のclass：fontColorGreenを太字に設定 */
+div .fontColorGreen {
+    font-weight: bold;
+}
