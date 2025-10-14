@@ -12,6 +12,7 @@
     <!--↓cssファイルの読み込み-->
     <link rel="stylesheet" href="css/style.css">
     <!--↓javaScriptファイルの読み込み。jsファイルはheadタグ内かbodyタグ内に定義する-->
+    <!--※ただし、DOMのレンダリングは上から下に処理するので記述する場所によって処理のタイミングが変わることに注意-->
     <script src="js/common.js"></script>
     <title>サンプルページ</title>
 </head>
@@ -25,8 +26,26 @@
         <p id="unique">文章３</p>
         <p class="fontColorGreen fontSize50">文章４</p>
     </div>
-    <button>ボタン</button>
-    <input type="text">
+
+    <!--↓javascriptサンプル-->
+    <button id="button">ボタン</button>
+    <script>
+        // idをキーに対象のボタンを取得
+        let button = document.getElementById("button");
+
+        // ボタンのクリック時のイベントリスナーに関数：buttonClickを追加
+        button.addEventListener("click", buttonClick);
+
+        // 関数定義
+        function buttonClick() {
+            // アラート出力
+            alert("ボタンがクリックされました");
+        }
+    </script>
+
+    <!--オンフォーカス、オンブラーに関数を設定。jsの処理はcommon.jsに記述-->
+    <input type="text" onfocus="over(this)" onblur="leave(this)">
+    <!--↑javascriptサンプル-->
 </body>
 
 </html>
