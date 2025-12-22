@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--------------------------------------->
+    <!--★HTML属性でのイベントリスナーの設定例-->
+    <!--------------------------------------->
+    <button onclick="clickHandle()">押す１</button>
+
+    <script>
+        function clickHandle() {
+            alert("クリックされた！");
+        }
+    </script>
+
+    <!--------------------------------------->
+    <!--★addEventListenerでのイベントリスナーの設定例-->
+    <!--------------------------------------->
+    <button id="btn1">押す２</button>
+    <script>
+        const btn = document.getElementById("btn1");
+
+        // 第1引数: イベント名、第2引数: 実行関数（イベントハンドラ）
+        // 第2引数は()を外して関数そのものを渡す。
+        // ()はすぐに実行という意味になるので、ページ読み込み時にすぐに実行されてしまう
+        // ()を外して関数そのものを渡す場合、クリックしたときにブラウザがbuttonClick()を呼び出す動きになる（コールバック関数の書き方）
+        btn.addEventListener("click", buttonClick);
+
+        function buttonClick() {
+            alert("クリックされました");
+        }
+
+        // 複数リスナーも追加可能
+        // 複数リスナーを登録した場合、登録した順序で実行される。
+        // ⇒アラート出力したあとにコンソールにログ出力
+        // 【参考】第2引数の関数の書き方は無名関数の書き方
+        btn.addEventListener("click", function () {
+            console.log("別の処理");
+        });
+
+        // ★ここから応用編★
+        // リスナーは削除することも可能。
+        // その場合、該当するイベントと関数を指定すればOK
+        // 一回だけ実行したいとか、条件によって動作を切り替えたいときとかに使用
+        btn.removeEventListener("click", buttonClick);
+
+        // ↓の書き方だとbuttonClickに引数を渡すことが出来ない
+        // btn.addEventListener("click", buttonClick);
+        // 引数を渡したい場合は無名関数の中から別定義の関数を呼ぶ
+        btn.addEventListener("click", function () {
+        // btn.addEventListener("click", buttonClick2(1, 2));はNG
+            console.log(buttonClick2(1, 2));
+        });
+
+        function buttonClick2(a, b) {
+            let c = a + b;
+            return c;
+        }
+    </script>
+</body>
+
+</html>

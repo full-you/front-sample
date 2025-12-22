@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--onclickイベントにshowTotalというfunction（関数）を設定-->
+    <!--★htmlからjsのfunctionの呼び出し例-->
+    <button onclick="showTotal()">おす</button>
+
+    <script>
+        // addを呼び出して計算結果をアラート表示する
+        function showTotal() {
+
+            // ★functionの呼び出し例＋引数と戻り値の受け取り方例
+            let result = add(10, 20);
+            alert("計算結果：" + result);
+        }
+
+        // 引数で受け取った値を加算する
+        function add(a, b) {
+            return a + b;
+        }
+    </script>
+</body>
+
+</html>
