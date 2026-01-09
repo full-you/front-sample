@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOリスト</title>
+</head>
+
+<body>
+    <h1>TODOリスト</h1>
+
+    <p id="error" style="color: red; height: 1.2em;"></p>
+    <input type="text" id="todoInput">
+    <button id="addBtn">追加</button>
+
+    <hr>
+
+    <ul id="todoList"></ul>
+
+    <script>
+        // 要素の取得
+        const todoInput = document.getElementById("todoInput");
+        const addBtn = document.getElementById("addBtn");
+        const todoList = document.getElementById("todoList");
+        const error = document.getElementById("error");
+        // エラーメッセージ定義
+        const errorMsg = "TODOを入力してください";
+
+        // イベントリスナー登録
+        addBtn.addEventListener("click", todoAdd);
+
+        /**
+         * 入力欄の内容をチェックしてTODOを追加する
+         * 空の場合はエラーメッセージを表示する
+         */
+        function todoAdd() {
+            // 入力テキスト取得
+            const inputText = todoInput.value;
+
+            // 未入力判定
+            if (inputText.trim() === "") {
+                // エラーメッセージを設定して処理終了
+                error.textContent = errorMsg;
+                return;
+            }
+
+            // リストにTODOを追加
+            const li = document.createElement("li");
+            li.textContent = inputText;
+            todoList.appendChild(li);
+
+            // 入力欄とエラーメッセージのクリア
+            todoInput.value = "";
+            error.textContent = "";
+        }
+    </script>
+</body>
+
+</html>
