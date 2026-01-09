@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おみくじアプリ</title>
+
+    <style>
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>おみくじ</h1>
+    <button id="fortuneBtn">占う</button>
+
+    <p id="result"></p>
+
+    <script>
+        // 要素の取得
+        const fortuneBtn = document.getElementById("fortuneBtn");
+        const result = document.getElementById("result");
+        // おみくじ結果定義
+        const fortunes = ["大吉", "中吉", "小吉", "吉", "凶"];
+
+        // イベントリスナー登録
+        fortuneBtn.addEventListener("click", getFortune);
+
+        /**
+         * おみくじ処理
+         */
+        function getFortune() {
+            // 0～4のランダム値取得
+            const index = Math.floor(Math.random() * fortunes.length);
+            // おみくじ結果の返却
+            result.textContent = fortunes[index];
+        }
+    </script>
+
+</body>
+
+</html>
