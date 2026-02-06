@@ -19,7 +19,7 @@ console.log(typeof a); // Boolean型が表示される
 let num = 10;
 
 // ★bigint：数値　⇒Numberより大きい値を保持
-// nを付ける or BigIntのコンストラクタ呼び出す（newはつけない）
+// nを付ける or BigIntの型変換用関数を使用
 let big1 = 9007199254740991n;
 let big2 = BigInt(9007199254740991);
 

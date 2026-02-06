@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Sample page
+    </title>
+    <style>
+        .note {
+            position: relative;
+            top: -20px;
+        }
+
+        div {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DOM APIの使い方サンプルページ</h1>
+
+    <hr>
+
+    <h2>◆要素取得（HTML要素を探して、JavaScriptで使えるようにする）</h2>
+    <h3>getElementById</h3>
+    <p class="note">指定した id を持つ要素を1つ取得する。<span style="color: red; font-weight: bold;">めっちゃよく使うやつ！</span></p>
+    <div>
+        <p id="hello">こんにちは</p>
+        <button id="helloBtn">押す</button>
+    </div>
+    <script>
+        // 指定したidを持つ要素を取得
+        const hello = document.getElementById("hello");
+        document.getElementById("helloBtn").addEventListener("click", () => {
+            alert(hello.textContent)
+        });
+    </script>
+
+    <h3>querySelector</h3>
+    <p class="note">CSSセレクタを使って 最初に見つかった要素を1つ取得する</p>
+    <div>
+        <p class="morning">おはよう</p>
+        <button id="morningBtn">押す</button>
+    </div>
+    <script>
+        // CSSセレクタを使って要素を取得（.xx、#xx、pなどのタグを指定する）
+        const morning = document.querySelector(".morning");
+        document.querySelector("#morningBtn").addEventListener("click", () => {
+            alert(morning.textContent);
+        });
+    </script>
+
+    <hr>
+    <h2>◆要素の内容の変更（要素の中身を書き換える）</h2>
+    <h3>innerText</h3><!--文字を書き換えたいだけならこれ-->
+    <p class="note">要素の<span style="font-weight: bold;">文字だけ</span>を変更する</p>
+
+    <div>
+        <p id="text">ここが変わる</p>
+        <button id="textChangeBtn">変更</button>
+    </div>
+    <script>
+        const text = document.getElementById("text");
+
+        document.getElementById("textChangeBtn").addEventListener("click", () => {
+            // テキストだけ変更
+            text.innerText = "テキストが変わりました";
+        });
+    </script>
+
+    <h3>innerHTML</h3><!--HTML構造ごと変えたいとき-->
+    <p class="note">要素を<span style="font-weight: bold;">HTMLごと</span>変更する</p>
+    <div>
+        <p id="html">ここが変わる</p>
+        <button id="htmlChangeBtn">変更</button>
+    </div>
+    <script>
+        const html = document.getElementById("html");
+        document.getElementById("htmlChangeBtn").addEventListener("click", () => {
+            // HTMLとして解釈される
+            html.innerHTML = "<strong>太字</strong>になりました";
+        });
+    </script>
+
+    <hr>
+    <h2>◆要素の追加・削除（HTML要素を動的に増やしたり消したりする）</h2>
+    <h3>appendChild</h3>
+    <p class="note">子要素を<span style="font-weight: bold;">追加する</span></p>
+
+    <h3>removeChild</h3>
+    <p class="note">指定した子要素を<span style="font-weight: bold;">削除する</span></p>
+
+    <div>
+        <ul id="list">
+            <li>りんご</li>
+        </ul>
+
+        <button id="addBtn">追加</button>
+        <button id="removeBtn">削除</button>
+        <script>
+            const list = document.getElementById("list");
+
+            document.getElementById("addBtn").addEventListener("click", () => {
+                const li = document.createElement("li"); // 要素を作る
+                li.innerText = "【追加】バナナ";
+                list.appendChild(li); // 親に追加
+            });
+
+            document.getElementById("removeBtn").addEventListener("click", () => {
+                const firstItem = list.firstElementChild; // 一番最初の子要素を取得
+                if (firstItem) {
+                    list.removeChild(firstItem); // 親から要素を削除
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>
