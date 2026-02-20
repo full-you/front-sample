@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOリスト</title>
+</head>
+
+<body>
+    <h1>TODOリスト</h1>
+    <h2>TODO削除機能付き</h2>
+
+    <p id="error" style="color: red; height: 1.2em;"></p>
+    <input type="text" id="todoInput">
+    <button id="addBtn">追加</button>
+    <!--【追加】TODO削除ボタン-->
+    <button id="delBtn">削除</button>
+
+    <hr>
+
+    <ul id="todoList"></ul>
+
+    <script>
+        // 要素の取得
+        const todoInput = document.getElementById("todoInput");
+        const addBtn = document.getElementById("addBtn");
+        // 【追加】TODO削除ボタンの取得
+        const delBtn = document.getElementById("delBtn");
+        const todoList = document.getElementById("todoList");
+        const error = document.getElementById("error");
+        // エラーメッセージ定義
+        const errorMsg = "TODOを入力してください";
+        // localStorage保存用key
+        const key = "todos";
+
+
+        // イベントリスナー登録
+        addBtn.addEventListener("click", todoAdd);
+        // 【追加】TODO削除ボタンにイベントリスナー登録
+        delBtn.addEventListener("click", todoDel);
+
+        // localStorageからデータ取得（なければ空の配列を生成）
+        const todos = JSON.parse(localStorage.getItem(key)) || [];
+
+        // 画面描画処理実行（js読み込み時に実行される。初期表示）
+        render();
+
+        /**
+         * TODOリストを描画する
+         */
+        function render() {
+            todoList.innerHTML = "";
+
+            todos.forEach(todo => {
+                const li = document.createElement("li");
+                //【削除】textContentではliの中身をすべてテキストで扱っているため。今回はliの中にテキストとチェックボックスを入れたい。
+                // li.textContent = todo;
+
+                // 【追加】チェックボックスの生成とliへの追加
+                const checkBox = document.createElement("input");
+                checkBox.type = "checkbox";
+                li.appendChild(checkBox);
+
+                // 【追加】TODO表示用テキストの生成とliへの追加
+                const todoText = document.createTextNode(todo);
+                li.appendChild(todoText);
+
+                todoList.appendChild(li);
+            });
+        }
+
+        /**
+         * TODO配列をJSON変換し、localStorageに保存する
+         */
+        function save() {
+            // 【追加】TODOが0件だったらlocalStorageからキー削除
+            if (todos.length === 0) {
+                localStorage.removeItem(key);
+            } else {
+                localStorage.setItem(key, JSON.stringify(todos));
+            }
+        }
+
+        /**
+         * 入力欄の内容をチェックしてTODOを追加する
+         * 空の場合はエラーメッセージを表示する
+         */
+        function todoAdd() {
+            // 入力テキスト取得
+            const inputText = todoInput.value;
+
+            // 未入力判定
+            if (inputText.trim() === "") {
+                // エラーメッセージを設定して処理終了
+                error.textContent = errorMsg;
+                return;
+            }
+
+            // TODO用配列にTODOを追加 ※liに直接appendしない
+            todos.push(inputText);
+
+            // データ保存
+            save();
+
+            // 画面再描画
+            render();
+
+            // 入力欄とエラーメッセージのクリア
+            todoInput.value = "";
+            error.textContent = "";
+        }
+
+        // 【追加】TODO削除処理
+        /**
+         * チェックされたTODOを削除する
+         */
+        function todoDel() {
+            // todoList内のliをすべて取得
+            const ul = document.getElementById("todoList");
+            const listItems = ul.querySelectorAll("li");
+            // （補足）document.querySelectorAll("#todoList li");を使えば一発で取れると思う
+
+            // 空の配列を用意
+            const tmpTodos = [];
+
+            // liを全件ループ
+            listItems.forEach((li, index) => {
+                const check = li.querySelector("input");
+
+                // チェックされていないものをピックアップ
+                if (!check.checked) {
+                    tmpTodos.push(todos[index]);
+                }
+            });
+
+            // todosをクリア
+            todos.length = 0;
+            // todosにピックアップしたtodoを設定
+            todos.push(...tmpTodos);
+            // (補足)「...」はスプレッド構文。配列をばらして中身を取り出す。という意味
+            // todos.push(tmpTodos);　⇒　[ [1,2,3] ]　配列の中に配列が追加される。
+            // todos.push(...tmpTodos);　⇒　[ 1,2,3 ]　中身を取り出して配列に追加される。
+
+            // 保存と再描画
+            save();
+            render();
+        }
+
+        // 【参考】TODO削除は以下のパターンでもOKかも。
+        // function todoDel2() {
+        //     const listItems = document.querySelectorAll("#todoList li");
+
+        //     // listItemsを全件ループ
+        //     // ※配列の前から処理すると要素を削除したときにindexがずれて全件処理対象にならない場合があるため、後ろからループさせる
+        //     for (let i = listItems.length - 1; i >= 0; i--) {
+        //         // li内のチェックボックスを取得
+        //         const checkbox = listItems[i].querySelector("input");
+
+        //         if (checkbox.checked) {
+        //             // 該当インデックス削除
+        //             todos.splice(i, 1);
+        //         }
+        //     }
+
+        //     save();
+        //     render();
+        // }
+    </script>
+</body>
+
+</html>

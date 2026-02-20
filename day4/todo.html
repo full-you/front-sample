@@ -9,6 +9,7 @@
 
 <body>
     <h1>TODOリスト</h1>
+    <h2>TODO保存機能付き（localStorageに保存）</h2>
 
     <p id="error" style="color: red; height: 1.2em;"></p>
     <input type="text" id="todoInput">
@@ -26,9 +27,39 @@
         const error = document.getElementById("error");
         // エラーメッセージ定義
         const errorMsg = "TODOを入力してください";
+        // 【追加】localStorage保存用key
+        const key = "todos";
 
         // イベントリスナー登録
         addBtn.addEventListener("click", addTodo);
+
+        // 【追加】localStorageからデータ取得（なければ空の配列を生成）
+        const todos = JSON.parse(localStorage.getItem(key)) || [];
+
+        // 【追加】画面描画処理実行（js読み込み時に実行される。初期表示）
+        render();
+        
+        // 【追加】画面描画処理
+        /**
+         * TODOリストを描画する
+         */
+        function render() {
+            todoList.innerHTML = "";
+
+            todos.forEach(todo => {
+                const li = document.createElement("li");
+                li.textContent = todo;
+                todoList.appendChild(li);
+            });
+        }
+
+        // 【追加】データ保存処理
+        /**
+         * TODO配列をJSON変換し、localStorageに保存する
+         */
+        function save(){
+            localStorage.setItem(key, JSON.stringify(todos));
+        }
 
         /**
          * 入力欄の内容をチェックしてTODOを追加する
@@ -45,10 +76,20 @@
                 return;
             }
 
-            // リストにTODOを追加
-            const li = document.createElement("li");
-            li.textContent = inputText;
-            todoList.appendChild(li);
+            // 【削除】
+            // // リストにTODOを追加
+            // const li = document.createElement("li");
+            // li.textContent = inputText;
+            // todoList.appendChild(li);
+
+            // 【追加】TODO用配列にTODOを追加 ※liに直接appendしない
+            todos.push(inputText);
+
+            // 【追加】データ保存
+            save();
+
+            // 【追加】画面再描画
+            render();
 
             // 入力欄とエラーメッセージのクリア
             todoInput.value = "";
