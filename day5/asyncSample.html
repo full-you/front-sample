@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>非同期通信サンプルページ</h1>
+    <p>※npx serveでサーバ起動すること</p>
+    <h2>プルダウンを変更すると関連プルダウンの中身が変更されるよくあるやつ</h2>
+    <select id="region">
+        <option value="01">北海道・東北</option>
+        <option value="02">関東</option>
+        <option value="03">中部</option>
+        <option value="04">近畿</option>
+        <option value="05">中国・四国</option>
+        <option value="06">九州・沖縄</option>
+    </select>
+    <select id="prefectures"></select>
+
+    <h2>非同期通信を見てみる</h2>
+    <p id="text"></p>
+    <input type="button" value="実行" id="asyncBtn">
+
+    <script>
+        // ★プルダウンを変更すると関連プルダウンの中身が変更されるよくあるやつ
+        // プルダウン取得
+        const region = document.getElementById("region");
+        const prefectures = document.getElementById("prefectures");
+
+        // イベントリスナー追加
+        region.addEventListener("change", chengeRegion);
+
+        // 非同期処理
+        async function chengeRegion() {
+            try {
+                // URL生成
+                const url = new URL("http://localhost:8080/getPref");
+                // パラメータ設定
+                url.searchParams.append("regionCd", region.value);
+
+                // API呼び出し
+                const response = await fetch(url);
+
+                // エラーチェック
+                if (!response.ok) {
+                    throw new Error("error");
+                }
+
+                // 都道府県プルダウンのクリア
+                prefectures.innerHTML = "";
+
+                // レスポンスをJSONに変換
+                const data = await response.json();
+
+                // レスポンスをプルダウンに設定
+                for (const [code, name] of Object.entries(data)) {
+                    const option = document.createElement("option");
+                    option.value = code;
+                    option.textContent = name;
+                    prefectures.appendChild(option);
+                }
+
+            } catch (error) {
+                console.error("error");
+            }
+        }
+
+        // ★非同期通信を見てみる
+        // ボタン、テキストの取得
+        const asyncBtn = document.getElementById("asyncBtn");
+        const text = document.getElementById("text");
+
+        // イベントリスナー追加
+        asyncBtn.addEventListener("click", threadSleepSample);
+
+        // 非同期処理
+        async function threadSleepSample() {
+
+            // API呼び出い
+            const response = await fetch("http://localhost:8080/threadSleepSample");
+
+            // エラーチェック
+            if (!response.ok) {
+                throw new Error("error");
+            }
+
+            // レスポンスのテキスト変換
+            const data = await response.text();
+
+            // 画面表示
+            text.textContent  = data;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おみくじアプリ</title>
+
+    <style>
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<!-- jQuery読み込み -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<body>
+    <h1>おみくじ</h1>
+    <button id="fortuneBtn">占う</button>
+
+    <p id="result"></p>
+
+    <script>
+        // 要素の取得
+        // 【修正】jQueryに統一
+        // const fortuneBtn = document.getElementById("fortuneBtn");
+        // const result = document.getElementById("result");
+        const $fortuneBtn = $("#fortuneBtn");
+        const $result = $("#result");
+
+        // 【削除】
+        // おみくじ結果定義
+        // const fortunes = ["大吉", "中吉", "小吉", "吉", "凶"];
+
+        // イベントリスナー登録
+        // 【修正】jQueryに統一
+        // fortuneBtn.addEventListener("click", getFortune);
+        $fortuneBtn.on("click", getFortune);
+
+        /**
+         * おみくじ処理
+         */
+        function getFortune() {
+
+            // 【削除】jsではなくAPIからおみくじ結果を取得するように変更する
+            // // 0～4のランダム値取得
+            // const index = Math.floor(Math.random() * fortunes.length);
+            // // おみくじ結果の返却
+            // result.textContent = fortunes[index];
+
+            // 【追加】
+            $.ajax({
+                url: "http://localhost:8080/getFortune",
+                type: "GET",
+                dataType: "json"
+            })
+                .done(function (response) {
+                    // おみくじ結果の返却
+                    $result.text(response.label);
+                })
+                .fail(function () {
+                    // エラーメッセージ返却
+                    $result.text("error");
+                });
+        }
+    </script>
+
+</body>
+
+</html>
