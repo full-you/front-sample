@@ -22,7 +22,7 @@
     <select id="prefectures"></select>
 
     <h2>非同期通信を見てみる</h2>
-    <p id="text"></p>
+    <p id="resText"></p>
     <input type="button" value="実行" id="asyncBtn">
 
     <script>
@@ -72,28 +72,34 @@
         // ★非同期通信を見てみる
         // ボタン、テキストの取得
         const asyncBtn = document.getElementById("asyncBtn");
-        const text = document.getElementById("text");
+        const resText = document.getElementById("resText");
 
         // イベントリスナー追加
         asyncBtn.addEventListener("click", threadSleepSample);
 
         // 非同期処理
         async function threadSleepSample() {
+            try {
 
-            // API呼び出い
-            const response = await fetch("http://localhost:8080/threadSleepSample");
+                // API呼び出い
+                const response = await fetch("http://localhost:8080/threadSleepSample");
 
-            // エラーチェック
-            if (!response.ok) {
-                throw new Error("error");
+                // エラーチェック
+                if (!response.ok) {
+                    resText.textContent = "error"; throw new Error("error");
+                }
+
+                // レスポンスのテキスト変換
+                const data = await responsse.text();
+
+                // 画面表示
+                resText.textContent = data;
+            } catch (error) {
+                resText.textContent = "error";
             }
 
-            // レスポンスのテキスト変換
-            const data = await response.text();
-
-            // 画面表示
-            text.textContent  = data;
         }
+
     </script>
 </body>
 
