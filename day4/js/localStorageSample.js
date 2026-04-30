@@ -30,4 +30,4 @@ const sampleObj = {
 localStorage.setItem("user", JSON.stringify(user));
 
 // 利用するときはデータを取り出してオブジェクトに変換
-const user = JSON.parse(data);
+const user = JSON.parse(localStorage.getItem("user"));
