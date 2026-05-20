@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>非同期サンプルページ</title>
 </head>
 
 <body>
     <h1>非同期通信サンプルページ</h1>
+    <p>参考までネイティブjsでの実装例としてjQueryを使用せず実装しています</p>
     <p>※npx serveでサーバ起動すること</p>
+
     <h2>プルダウンを変更すると関連プルダウンの中身が変更されるよくあるやつ</h2>
     <select id="region">
         <option value="01">北海道・東北</option>
@@ -34,7 +36,7 @@
         // イベントリスナー追加
         region.addEventListener("change", chengeRegion);
 
-        // 非同期処理
+        // 非同期処理 ★参考までネイティブjsでの実装例としてjQueryを使用せず実装しています
         async function chengeRegion() {
             try {
                 // URL生成
@@ -53,7 +55,7 @@
                 // 都道府県プルダウンのクリア
                 prefectures.innerHTML = "";
 
-                // レスポンスをJSONに変換
+                // レスポンスをJSONからjsオブジェクトに変換
                 const data = await response.json();
 
                 // レスポンスをプルダウンに設定
@@ -77,7 +79,7 @@
         // イベントリスナー追加
         asyncBtn.addEventListener("click", threadSleepSample);
 
-        // 非同期処理
+        // 非同期処理 ★参考までネイティブjsでの実装例としてjQueryを使用せず実装しています
         async function threadSleepSample() {
             try {
 
